@@ -16,10 +16,15 @@ class MainActivity : AppCompatActivity() {
 
     private var idList = mutableListOf<String>();
     private val client = OkHttpClient()
+    val wow: GetDataFromWeb = GetDataFromWeb();
+    var result = listOf<GitHubUser>();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         run();
+        result = wow.run();
+        Log.d("demo", "Inside main "+ result.toString())
+
 
         recyclerViewId.layoutManager = LinearLayoutManager(this);
     }

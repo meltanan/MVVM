@@ -1,16 +1,14 @@
 package com.example.mvvm
-
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerAdapter (private var ides: List<String>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+
+    class RecyclerAdapter (private var homeFeed: MainActivity.HomeFeed): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -20,9 +18,7 @@ class RecyclerAdapter (private var ides: List<String>): RecyclerView.Adapter<Rec
             itemId.text = id
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, "$position", Toast.LENGTH_SHORT).show();
-                //   Log.d("demo", "hello")
             }
-
 
         }
 
@@ -33,13 +29,12 @@ class RecyclerAdapter (private var ides: List<String>): RecyclerView.Adapter<Rec
     }
 
     override fun getItemCount(): Int {
-        return  ides.size;
+        Log.d("demo", homeFeed.videos.count().toString())
+        return  homeFeed.videos.count();
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(ides[position], position)
-//        holder.itemId.text=ides[position]
-////        Log.d("demo")
+        holder.bindView(homeFeed.videos.get(position).id.toString(),position)
 
 
     }

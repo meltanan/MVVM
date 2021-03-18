@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MVVM">
+        <activity android:name=".RetroFitActivityPra"></activity>
         <activity
             android:name=".RetroFitActivity"
             android:label="@string/title_activity_retro_fit"
-            android:theme="@style/Theme.MVVM.NoActionBar"></activity>
+            android:theme="@style/Theme.MVVM.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

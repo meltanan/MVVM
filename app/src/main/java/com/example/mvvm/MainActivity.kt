@@ -5,12 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.GsonBuilder
 import com.google.gson.internal.GsonBuildConfig
-import com.squareup.moshi.JsonClass
-import com.squareup.moshi.Moshi
-
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import java.io.IOException
+import java.lang.reflect.Type
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     fun run() {
         val request = Request.Builder()
-            .url("https://api.letsbuildthatapp.com/youtube/home_feed")
-            //.url("https://api.github.com/users")
+            //.url("https://api.letsbuildthatapp.com/youtube/home_feed")
+            .url("https://api.github.com/users")
             .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -37,12 +36,14 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response?.body?.string();
-                Log.d("result", "$body");
                 val gson= GsonBuilder().create();
-                val homeFeed = gson.fromJson(body, HomeFeed::class.java)
+                val collectionType: Type = object : TypeToken<List<GitHubUser?>?>() {}.type
+                val users: List<GitHubUser>  = gson.fromJson(body, collectionType);
+
+                //val homeFeed = gson.fromJson(body, HomeFeed::class.java)
 
                     runOnUiThread{
-                    recyclerViewId.adapter = RecyclerAdapter(homeFeed);
+                    recyclerViewId.adapter = RecyclerAdapter(users);
                 }
 
                 response.use {
@@ -55,4 +56,5 @@ class MainActivity : AppCompatActivity() {
     class HomeFeed (val videos: List <Videos>)
     class Videos (val id: Int, val name: String, val link: String,val numberOfViews: Int,val channel: Channel);
     class  Channel (val name: String, val profileImageUrl: String)
+    data class GitHubUser(val login: String, val id: Int, val node_id: String);
 }

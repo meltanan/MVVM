@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 
-    class RecyclerAdapter (private var homeFeed: MainActivity.HomeFeed): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+    class RecyclerAdapter (private var homeFeed: List<MainActivity.GitHubUser> ): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -29,13 +29,13 @@ import androidx.recyclerview.widget.RecyclerView
     }
 
     override fun getItemCount(): Int {
-        Log.d("demo", homeFeed.videos.count().toString())
-        return  homeFeed.videos.count();
+        return  homeFeed.count();
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(homeFeed.videos.get(position).id.toString(),position)
-
+        //holder.bindView(homeFeed.videos.get(position).id.toString(),position)
+        for (i in 0 until homeFeed.size)
+            holder.bindView(homeFeed[i].id.toString(),position);
 
     }
 }
